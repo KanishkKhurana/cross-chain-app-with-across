@@ -1,11 +1,20 @@
 "use client";
 
 import "@rainbow-me/rainbowkit/styles.css";
-import { mainnet, polygon, optimism, arbitrum, base } from "wagmi/chains";
+import {
+  mainnet,
+  polygon,
+  optimism,
+  arbitrum,
+  base,
+  sepolia,
+  arbitrumSepolia,
+} from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { type ReactNode, useState } from "react";
 import { type State, WagmiProvider } from "wagmi";
 import { WagmiConfig } from "../scripts/config";
+import { AcrossProvider } from "@/lib/AcrossContext";
 import {
   getDefaultConfig,
   RainbowKitProvider,
@@ -28,17 +37,19 @@ export default function Providers(props: {
   return (
     <WagmiProvider config={WagmiConfig} initialState={props.initialState}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider
-          theme={darkTheme({
-            accentColor: "#0E76FD",
-            accentColorForeground: "white",
-            borderRadius: "large",
-            fontStack: "system",
-            overlayBlur: "small",
-          })}
-        >
-          {props.children}
-        </RainbowKitProvider>
+        <AcrossProvider>
+          <RainbowKitProvider
+            theme={darkTheme({
+              accentColor: "#0E76FD",
+              accentColorForeground: "white",
+              borderRadius: "large",
+              fontStack: "system",
+              overlayBlur: "small",
+            })}
+          >
+            {props.children}
+          </RainbowKitProvider>
+        </AcrossProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );
